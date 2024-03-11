@@ -1,42 +1,44 @@
-# アプリ名
+# HomeKitchen Adventure
 
-HomeKitchen Adventure
+## 概要
+HomeKitchen Adventureは、選択した食材を基に料理を提案し、ユーザーがこれまでに作成した料理を記録できるウェブアプリケーションです。このアプリケーションはGo言語でバックエンドが構築されており、簡単なフロントエンドも提供します。
 
-## ローカルでのテスト
+## 特徴
+- 食材を入力すると、その食材を使った料理を提案します。
+- 提案された料理の材料リストを表示します。
+- 作成した料理の名前と使用した材料を登録し、記録を保持します。(未実装)
 
-1. ビルド
-```
-go build . 
-```
-1. RUN
-```
-go run .
-``` 
+## 始め方
 
-## AWS(ECR)へのImageのPush方法
+### 必要条件
+- Go 1.15 以上
 
-Windowsで実行
+### セットアップ方法
+1. このリポジトリをクローンします。
 
-1.認証トークンを取得し、レジストリに対して Docker クライアントを認証します
+   ```sh
+   git clone <リポジトリのURL>
+   ```
 
-```
-$ aws ecr get-login-password | docker login --username AWS --password-stdin {AWSアカウントID}.dkr.ecr.{リージョン}.amazonaws.com
-```
+2. プロジェクトディレクトリに移動します。
 
-2.Docker イメージを構築します
+   ```sh
+   cd HomeKitchen-Adventure
+   ```
 
-```
-$ docker build -t homekitchenadventure .
-```
+3. アプリケーションを起動します。
 
-3.リポジトリにイメージをプッシュできるように、イメージにタグを付け  
-ECRの無料枠を超えないようにとりあえずは全部latestでpushする
-```
-$ docker tag homekitchenadventure:latest 851725409176.dkr.ecr.ap-northeast-1.amazonaws.com/homekitchenadventure:latest
-```
+   ```sh
+   go run .
+   ```
 
-4.AWS リポジトリにイメージをプッシュします
+### 使用方法
+1. ブラウザで `http://localhost:8080` にアクセスします。
+2. 表示されたページで、料理の提案を受けたい食材を入力し、`提案を受け取る`ボタンをクリックします。
+3. 下部に提案された料理とその材料が表示されます。
+4. 「料理の登録」フォームを使用して、あなたが作った料理とその材料を登録できます。
 
-```
-docker push {AWSアカウントID}.dkr.ecr.{リージョン}.amazonaws.com/homekitchenadventure:latest
-```
+## 技術スタック
+- バックエンド: Go
+- フロントエンド: HTML, CSS, JavaScript
+- AWS: ECS
