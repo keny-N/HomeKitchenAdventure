@@ -1,0 +1,42 @@
+# アプリ名
+
+HomeKitchen Adventure
+
+## ローカルでのテスト
+
+1. ビルド
+```
+go build . 
+```
+1. RUN
+```
+go run .
+``` 
+
+## AWS(ECR)へのImageのPush方法
+
+Windowsで実行
+
+1.認証トークンを取得し、レジストリに対して Docker クライアントを認証します
+
+```
+$ aws ecr get-login-password | docker login --username AWS --password-stdin {AWSアカウントID}.dkr.ecr.{リージョン}.amazonaws.com
+```
+
+2.Docker イメージを構築します
+
+```
+$ docker build -t homekitchenadventure .
+```
+
+3.リポジトリにイメージをプッシュできるように、イメージにタグを付け  
+ECRの無料枠を超えないようにとりあえずは全部latestでpushする
+```
+$ docker tag homekitchenadventure:latest 851725409176.dkr.ecr.ap-northeast-1.amazonaws.com/homekitchenadventure:latest
+```
+
+4.AWS リポジトリにイメージをプッシュします
+
+```
+docker push {AWSアカウントID}.dkr.ecr.{リージョン}.amazonaws.com/homekitchenadventure:latest
+```
